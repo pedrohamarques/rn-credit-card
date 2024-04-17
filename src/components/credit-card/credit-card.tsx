@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import Animated, { type SharedValue } from "react-native-reanimated";
 
-import { CardDataProps } from "@constants/credit-card";
+import { CardDataProps } from "@typings/data";
 
 import { useCreditCard } from "./credit-card.hook";
 
