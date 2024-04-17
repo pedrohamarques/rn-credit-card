@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { useSharedValue } from "react-native-reanimated";
 
 import { CARD_SIDE } from "@constants/credit-card";
 
-export function usePayment() {
-    const [name, setName] = useState("");
-    const [number, setNumber] = useState("");
-    const [date, setDate] = useState("");
-    const [code, setCode] = useState("");
+import { ACTION_KIND, cardDataReducer } from "./reducer";
 
+import type { CardDataProps } from "@typings/data";
+
+const initialCardState: CardDataProps = {
+    code: "",
+    date: "",
+    name: "",
+    number: "",
+};
+
+export function usePayment() {
     const cardSide = useSharedValue(CARD_SIDE.front);
 
     function showFrontCard() {
@@ -27,18 +33,18 @@ export function usePayment() {
         }
     }
 
+    function handleTyping(data: string, identifier: ACTION_KIND) {
+        dispatch({ type: identifier, payload: data });
+    }
+
+    const [state, dispatch] = useReducer(cardDataReducer, initialCardState);
+
     return {
         cardSide,
-        name,
-        number,
-        date,
-        code,
         handleFlipCard,
         showFrontCard,
         showBackCard,
-        setName,
-        setDate,
-        setCode,
-        setNumber,
+        handleTyping,
+        state,
     };
 }
