@@ -1,11 +1,22 @@
 import { Text, View } from "react-native";
+import Animated, { type SharedValue } from "react-native-reanimated";
+
+import { useCreditCard } from "./credit-card.hook";
 
 import { styles } from "./styles";
 
-export function CreditCard() {
+type CreditCardProps = {
+    cardSide: SharedValue<number>;
+};
+
+export function CreditCard({ cardSide }: CreditCardProps) {
+    const { frontAnimatedStyles, backAnimatedStyle } = useCreditCard({
+        cardSide,
+    });
     return (
         <View>
-            <View style={[styles.card, styles.front]}>
+            <Animated.View
+                style={[styles.card, styles.front, frontAnimatedStyles]}>
                 <View style={styles.header}>
                     <View style={[styles.circle, styles.logo]} />
                     <Text>Meu Cartão</Text>
@@ -18,9 +29,10 @@ export function CreditCard() {
                         <View style={[styles.circle, styles.orange]} />
                     </View>
                 </View>
-            </View>
+            </Animated.View>
 
-            <View style={[styles.card, styles.back]}>
+            <Animated.View
+                style={[styles.card, styles.back, backAnimatedStyle]}>
                 <View>
                     <Text style={styles.label}>Número do cartão</Text>
                     <Text style={styles.value}>1234 5678 9012 3456</Text>
@@ -37,7 +49,7 @@ export function CreditCard() {
                         <Text style={styles.value}>123</Text>
                     </View>
                 </View>
-            </View>
+            </Animated.View>
         </View>
     );
 }
