@@ -10,4 +10,14 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         marginVertical: 32,
     },
+    form: {
+        gap: 12,
+    },
+    inputInLine: {
+        flexDirection: "row",
+        gap: 12,
+    },
+    smallInput: {
+        width: 72,
+    },
 });
